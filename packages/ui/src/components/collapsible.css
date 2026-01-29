@@ -90,4 +90,10 @@
       }
     }
   }
+
+  &[data-variant="ghost"][data-scope="filetree"] {
+    > [data-slot="collapsible-trigger"] {
+      height: 24px;
+    }
+  }
 }

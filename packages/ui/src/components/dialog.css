@@ -65,7 +65,7 @@
 
       [data-slot="dialog-header"] {
         display: flex;
-        padding: 16px 16px 16px 24px;
+        padding: 20px;
         justify-content: space-between;
         align-items: center;
         flex-shrink: 0;
@@ -143,6 +143,14 @@
   &[data-size="x-large"] [data-slot="dialog-container"] {
     width: min(calc(100vw - 32px), 960px);
     height: min(calc(100vh - 32px), 600px);
+  }
+}
+
+[data-component="dialog"][data-transition] [data-slot="dialog-content"] {
+  animation: contentHide 100ms ease-in forwards;
+
+  &[data-expanded] {
+    animation: contentShow 150ms ease-out;
   }
 }
 
