@@ -46,6 +46,13 @@ type ModelOption = { modelId: string; name: string }
 
 const DEFAULT_VARIANT_VALUE = "default"
 
+function toolTitle(part: MessageV2.ToolPart): string {
+  const state = part.state as MessageV2.ToolStateCompleted
+  if (part.tool !== "bash") return state.title
+  const cmd = state.input["command"]
+  return typeof cmd === "string" ? cmd : state.title
+}
+
 export namespace ACP {
   const log = Log.create({ service: "acp-agent" })
 
@@ -321,7 +328,7 @@ export namespace ACP {
                       status: "completed",
                       kind,
                       content,
-                      title: part.state.title,
+                      title: toolTitle(part),
                       rawInput: part.state.input,
                       rawOutput: {
                         output: part.state.output,
@@ -803,7 +810,7 @@ export namespace ACP {
                     status: "completed",
                     kind,
                     content,
-                    title: part.state.title,
+                    title: toolTitle(part),
                     rawInput: part.state.input,
                     rawOutput: {
                       output: part.state.output,
