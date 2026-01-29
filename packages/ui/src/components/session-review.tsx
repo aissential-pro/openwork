@@ -480,7 +480,7 @@ export const SessionReview = (props: SessionReviewProps) => {
               }
 
               return (
-                <Accordion.Item value={diff.file} data-slot="session-review-accordion-item">
+                <Accordion.Item value={diff.file} expanded={open().includes(diff.file)} data-slot="session-review-accordion-item">
                   <StickyAccordionHeader>
                     <Accordion.Trigger>
                       <div data-slot="session-review-trigger-content">

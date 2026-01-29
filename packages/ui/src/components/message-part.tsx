@@ -48,6 +48,7 @@ import { Tooltip } from "./tooltip"
 import { IconButton } from "./icon-button"
 import { createAutoScroll } from "../hooks"
 import { createResizeObserver } from "@solid-primitives/resize-observer"
+import { MorphChevron } from "./morph-chevron"
 
 interface Diagnostic {
   range: {
@@ -414,7 +415,7 @@ export function UserMessageDisplay(props: { message: UserMessage; parts: PartTyp
               toggleExpanded()
             }}
           >
-            <Icon name="chevron-down" size="small" />
+            <MorphChevron expanded={expanded()} />
           </button>
           <div data-slot="user-message-copy-wrapper">
             <Tooltip

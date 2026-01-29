@@ -1,0 +1,55 @@
+import { createEffect, createUniqueId, on } from "solid-js"
+
+export interface MorphChevronProps {
+  expanded: boolean
+  class?: string
+}
+
+export function MorphChevron(props: MorphChevronProps) {
+  const id = createUniqueId()
+  let expandAnim: SVGAnimateElement | undefined
+  let collapseAnim: SVGAnimateElement | undefined
+
+  createEffect(
+    on(
+      () => props.expanded,
+      (expanded, prev) => {
+        if (prev === undefined) return
+        if (expanded) {
+          expandAnim?.beginElement()
+        } else {
+          collapseAnim?.beginElement()
+        }
+      },
+    ),
+  )
+
+  return (
+    <svg viewBox="0 0 16 16" data-slot="morph-chevron-svg" class={props.class} xmlns="http://www.w3.org/2000/svg">
+      <path d={props.expanded ? "M4 10L8 6L12 10" : "M4 6L8 10L12 6"} id={`morph-chevron-path-${id}`}>
+        <animate
+          ref={expandAnim}
+          id={`morph-expand-${id}`}
+          attributeName="d"
+          dur="200ms"
+          fill="freeze"
+          calcMode="spline"
+          keySplines="0.25 0 0.5 1"
+          values="M4 6L8 10L12 6;M4 10L8 6L12 10"
+          begin="indefinite"
+        />
+        <animate
+          ref={collapseAnim}
+          id={`morph-collapse-${id}`}
+          attributeName="d"
+          dur="200ms"
+          fill="freeze"
+          calcMode="spline"
+          keySplines="0.25 0 0.5 1"
+          values="M4 10L8 6L12 10;M4 6L8 10L12 6"
+          begin="indefinite"
+        />
+      </path>
+    </svg>
+  )
+}
