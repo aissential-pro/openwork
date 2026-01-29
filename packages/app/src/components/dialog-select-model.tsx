@@ -88,7 +88,7 @@ const ModelList: Component<{
 
 export function ModelSelectorPopover<T extends ValidComponent = "div">(props: {
   provider?: string
-  children?: JSX.Element
+  children?: JSX.Element | ((open: boolean) => JSX.Element)
   triggerAs?: T
   triggerProps?: ComponentProps<T>
 }) {
@@ -101,13 +101,44 @@ export function ModelSelectorPopover<T extends ValidComponent = "div">(props: {
   }
   const language = useLanguage()
 
+  // Handle ESC key to close
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      e.preventDefault()
+      e.stopPropagation()
+      setOpen(false)
+    }
+  }
+
+  const renderChildren = () => {
+    if (typeof props.children === "function") {
+      return props.children(open())
+    }
+    return props.children
+  }
+
   return (
     <Kobalte open={open()} onOpenChange={setOpen} placement="top-start" gutter={8}>
-      <Kobalte.Trigger as={props.triggerAs ?? "div"} {...(props.triggerProps as any)}>
-        {props.children}
+      <Kobalte.Trigger
+        as={props.triggerAs ?? "div"}
+        {...(props.triggerProps as any)}
+        data-active={open() ? "true" : undefined}
+      >
+        {renderChildren()}
       </Kobalte.Trigger>
       <Kobalte.Portal>
-        <Kobalte.Content class="w-72 h-80 flex flex-col rounded-md border border-border-base bg-surface-raised-stronger-non-alpha shadow-md z-50 outline-none overflow-hidden">
+        <Show when={open()}>
+          <div
+            class="fixed inset-0 z-40"
+            onClick={() => setOpen(false)}
+            onKeyDown={handleKeyDown}
+          />
+        </Show>
+        <Kobalte.Content
+          class="w-72 h-80 flex flex-col rounded-md border border-border-base bg-surface-raised-stronger-non-alpha shadow-md z-50 outline-none overflow-hidden"
+          data-component="model-popover-content"
+          onKeyDown={handleKeyDown}
+        >
           <Kobalte.Title class="sr-only">{language.t("dialog.model.select.title")}</Kobalte.Title>
           <ModelList
             provider={props.provider}
