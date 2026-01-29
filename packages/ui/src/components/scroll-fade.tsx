@@ -1,11 +1,4 @@
-import {
-  type JSX,
-  createEffect,
-  createSignal,
-  onCleanup,
-  onMount,
-  splitProps,
-} from "solid-js"
+import { type JSX, createEffect, createSignal, onCleanup, onMount, splitProps } from "solid-js"
 import "./scroll-fade.css"
 
 export interface ScrollFadeProps extends JSX.HTMLAttributes<HTMLDivElement> {

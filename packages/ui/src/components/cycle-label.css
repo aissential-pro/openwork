@@ -10,7 +10,7 @@
 
   display: inline-flex;
   position: relative;
-  
+
   transform-style: preserve-3d;
   perspective: 500px;
   transition: width 200ms var(--c-ease);

@@ -925,7 +925,7 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
       .abort({
         sessionID,
       })
-      .catch(() => { })
+      .catch(() => {})
   }
 
   const addToHistory = (prompt: Prompt, mode: "normal" | "shell") => {
@@ -1351,18 +1351,18 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
 
     const contextParts: Array<
       | {
-        id: string
-        type: "text"
-        text: string
-        synthetic?: boolean
-      }
+          id: string
+          type: "text"
+          text: string
+          synthetic?: boolean
+        }
       | {
-        id: string
-        type: "file"
-        mime: string
-        url: string
-        filename?: string
-      }
+          id: string
+          type: "file"
+          mime: string
+          url: string
+          filename?: string
+        }
     > = []
 
     const commentNote = (path: string, selection: FileSelection | undefined, comment: string) => {
@@ -1434,13 +1434,13 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
 
     const optimisticParts = requestParts.map((part) => ({
       ...part,
-      sessionID: session?.id || '',
+      sessionID: session?.id || "",
       messageID,
     })) as unknown as Part[]
 
     const optimisticMessage: Message = {
       id: messageID,
-      sessionID: session?.id || '',
+      sessionID: session?.id || "",
       role: "user",
       time: { created: Date.now() },
       agent,
@@ -1451,9 +1451,9 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
       if (sessionDirectory === projectDirectory) {
         sync.set(
           produce((draft) => {
-            const messages = draft.message[session?.id || '']
+            const messages = draft.message[session?.id || ""]
             if (!messages) {
-              draft.message[session?.id || ''] = [optimisticMessage]
+              draft.message[session?.id || ""] = [optimisticMessage]
             } else {
               const result = Binary.search(messages, messageID, (m) => m.id)
               messages.splice(result.index, 0, optimisticMessage)
@@ -1469,9 +1469,9 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
 
       globalSync.child(sessionDirectory)[1](
         produce((draft) => {
-          const messages = draft.message[session?.id || '']
+          const messages = draft.message[session?.id || ""]
           if (!messages) {
-            draft.message[session?.id || ''] = [optimisticMessage]
+            draft.message[session?.id || ""] = [optimisticMessage]
           } else {
             const result = Binary.search(messages, messageID, (m) => m.id)
             messages.splice(result.index, 0, optimisticMessage)
@@ -1488,7 +1488,7 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
       if (sessionDirectory === projectDirectory) {
         sync.set(
           produce((draft) => {
-            const messages = draft.message[session?.id || '']
+            const messages = draft.message[session?.id || ""]
             if (messages) {
               const result = Binary.search(messages, messageID, (m) => m.id)
               if (result.found) messages.splice(result.index, 1)
@@ -1501,7 +1501,7 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
 
       globalSync.child(sessionDirectory)[1](
         produce((draft) => {
-          const messages = draft.message[session?.id || '']
+          const messages = draft.message[session?.id || ""]
           if (messages) {
             const result = Binary.search(messages, messageID, (m) => m.id)
             if (result.found) messages.splice(result.index, 1)
@@ -1547,7 +1547,7 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
         restoreInput()
       }
 
-      pending.set(session?.id || '', { abort: controller, cleanup })
+      pending.set(session?.id || "", { abort: controller, cleanup })
 
       const abort = new Promise<Awaited<ReturnType<typeof WorktreeState.wait>>>((resolve) => {
         if (controller.signal.aborted) {
@@ -1575,7 +1575,7 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
         if (timer.id === undefined) return
         clearTimeout(timer.id)
       })
-      pending.delete(session?.id || '')
+      pending.delete(session?.id || "")
       if (controller.signal.aborted) return false
       if (result.status === "failed") throw new Error(result.message)
       return true
@@ -1585,7 +1585,7 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
       const ok = await waitForWorktree()
       if (!ok) return
       await client.session.prompt({
-        sessionID: session?.id || '',
+        sessionID: session?.id || "",
         agent,
         model,
         messageID,
@@ -1595,7 +1595,7 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
     }
 
     void send().catch((err) => {
-      pending.delete(session?.id || '')
+      pending.delete(session?.id || "")
       if (sessionDirectory === projectDirectory && session?.id) {
         sync.set("session_status", session?.id, { type: "idle" })
       }
@@ -1620,8 +1620,12 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
   }
 
   const currrentModelVariant = createMemo(() => {
-    const modelVariant = local.model.variant.current() ?? ''
-    return modelVariant === 'xhigh' ? 'xHigh' : (modelVariant.length > 0 ? modelVariant[0].toUpperCase() + modelVariant.slice(1) : 'Default')
+    const modelVariant = local.model.variant.current() ?? ""
+    return modelVariant === "xhigh"
+      ? "xHigh"
+      : modelVariant.length > 0
+        ? modelVariant[0].toUpperCase() + modelVariant.slice(1)
+        : "Default"
   })
 
   const reasoningPercentage = createMemo(() => {
@@ -1629,7 +1633,7 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
     const current = local.model.variant.current()
     const totalEntries = variants.length + 1
 
-    if (totalEntries <= 2 || current === 'Default') {
+    if (totalEntries <= 2 || current === "Default") {
       return 0
     }
 
@@ -1943,7 +1947,11 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
                       title={language.t("command.model.choose")}
                       keybind={command.keybind("model.choose")}
                     >
-                      <Button as="div" variant="ghost" onClick={() => dialog.render(<DialogSelectModelUnpaid />, "select-model")}>
+                      <Button
+                        as="div"
+                        variant="ghost"
+                        onClick={() => dialog.render(<DialogSelectModelUnpaid />, "select-model")}
+                      >
                         <Show when={local.model.current()?.provider?.id}>
                           <ProviderIcon id={local.model.current()!.provider.id as IconName} class="size-4 shrink-0" />
                         </Show>
