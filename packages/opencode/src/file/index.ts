@@ -204,37 +204,34 @@ export namespace File {
     "x3f",
   ])
 
-  function isImageByExtension(filepath: string): boolean {
-    const ext = path.extname(filepath).toLowerCase().slice(1)
-    return imageExtensions.has(ext)
+  const imageMimeTypes: Record<string, string> = {
+    png: "image/png",
+    jpg: "image/jpeg",
+    jpeg: "image/jpeg",
+    gif: "image/gif",
+    bmp: "image/bmp",
+    webp: "image/webp",
+    ico: "image/x-icon",
+    tif: "image/tiff",
+    tiff: "image/tiff",
+    svg: "image/svg+xml",
+    svgz: "image/svg+xml",
+    avif: "image/avif",
+    apng: "image/apng",
+    jxl: "image/jxl",
+    heic: "image/heic",
+    heif: "image/heif",
   }
 
-  function getImageMimeType(filepath: string): string {
+  function getFileTypeByExtension(filepath: string): { isImage: boolean; isBinary: boolean; mimeType?: string } {
     const ext = path.extname(filepath).toLowerCase().slice(1)
-    const mimeTypes: Record<string, string> = {
-      png: "image/png",
-      jpg: "image/jpeg",
-      jpeg: "image/jpeg",
-      gif: "image/gif",
-      bmp: "image/bmp",
-      webp: "image/webp",
-      ico: "image/x-icon",
-      tif: "image/tiff",
-      tiff: "image/tiff",
-      svg: "image/svg+xml",
-      svgz: "image/svg+xml",
-      avif: "image/avif",
-      apng: "image/apng",
-      jxl: "image/jxl",
-      heic: "image/heic",
-      heif: "image/heif",
+    if (imageExtensions.has(ext)) {
+      return { isImage: true, isBinary: false, mimeType: imageMimeTypes[ext] || "image/" + ext }
     }
-    return mimeTypes[ext] || "image/" + ext
-  }
-
-  function isBinaryByExtension(filepath: string): boolean {
-    const ext = path.extname(filepath).toLowerCase().slice(1)
-    return binaryExtensions.has(ext)
+    if (binaryExtensions.has(ext)) {
+      return { isImage: false, isBinary: true }
+    }
+    return { isImage: false, isBinary: false }
   }
 
   function isImage(mimeType: string): boolean {
@@ -436,18 +433,19 @@ export namespace File {
     }
 
     // Fast path: check extension before any filesystem operations
-    if (isImageByExtension(file)) {
+    const fileType = getFileTypeByExtension(file)
+
+    if (fileType.isImage) {
       const bunFile = Bun.file(full)
       if (await bunFile.exists()) {
         const buffer = await bunFile.arrayBuffer().catch(() => new ArrayBuffer(0))
         const content = Buffer.from(buffer).toString("base64")
-        const mimeType = getImageMimeType(file)
-        return { type: "text", content, mimeType, encoding: "base64" }
+        return { type: "text", content, mimeType: fileType.mimeType, encoding: "base64" }
       }
       return { type: "text", content: "" }
     }
 
-    if (isBinaryByExtension(file)) {
+    if (fileType.isBinary) {
       return { type: "binary", content: "" }
     }
 
