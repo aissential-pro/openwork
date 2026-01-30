@@ -51,6 +51,7 @@ export const RunCommand = cmd({
         type: "string",
       })
       .option("fork-session", {
+        alias: ["F"],
         describe: "fork the session before continuing (requires --continue or --session)",
         type: "boolean",
       })
