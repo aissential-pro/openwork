@@ -248,10 +248,18 @@ function App() {
         local.model.set({ providerID, modelID }, { recent: true })
       }
       if (args.sessionID) {
-        route.navigate({
-          type: "session",
-          sessionID: args.sessionID,
-        })
+        if (args.fork) {
+          sdk.client.session.fork({ sessionID: args.sessionID }).then((result) => {
+            if (result.data?.id) {
+              route.navigate({ type: "session", sessionID: result.data.id })
+            }
+          })
+        } else {
+          route.navigate({
+            type: "session",
+            sessionID: args.sessionID,
+          })
+        }
       }
     })
   })
@@ -265,7 +273,15 @@ function App() {
       .find((x) => x.parentID === undefined)?.id
     if (match) {
       continued = true
-      route.navigate({ type: "session", sessionID: match })
+      if (args.fork) {
+        sdk.client.session.fork({ sessionID: match }).then((result) => {
+          if (result.data?.id) {
+            route.navigate({ type: "session", sessionID: result.data.id })
+          }
+        })
+      } else {
+        route.navigate({ type: "session", sessionID: match })
+      }
     }
   })
 
