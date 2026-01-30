@@ -252,6 +252,8 @@ function App() {
           sdk.client.session.fork({ sessionID: args.sessionID }).then((result) => {
             if (result.data?.id) {
               route.navigate({ type: "session", sessionID: result.data.id })
+            } else {
+              toast.show({ message: "Failed to fork session", variant: "error" })
             }
           })
         } else {
@@ -277,6 +279,8 @@ function App() {
         sdk.client.session.fork({ sessionID: match }).then((result) => {
           if (result.data?.id) {
             route.navigate({ type: "session", sessionID: result.data.id })
+          } else {
+            toast.show({ message: "Failed to fork session", variant: "error" })
           }
         })
       } else {
