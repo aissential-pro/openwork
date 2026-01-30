@@ -288,20 +288,16 @@ export const RunCommand = cmd({
       const sdk = createOpencodeClient({ baseUrl: args.attach })
 
       const sessionID = await (async () => {
-        let id: string | undefined
-        if (args.continue) {
-          const result = await sdk.session.list()
-          id = result.data?.find((s) => !s.parentID)?.id
-        } else if (args.session) {
-          id = args.session
-        }
+        const baseID = args.continue
+          ? (await sdk.session.list()).data?.find((s) => !s.parentID)?.id
+          : args.session
 
-        if (id && args.forkSession) {
-          const forked = await sdk.session.fork({ sessionID: id })
+        if (baseID && args.forkSession) {
+          const forked = await sdk.session.fork({ sessionID: baseID })
           return forked.data?.id
         }
 
-        if (id) return id
+        if (baseID) return baseID
 
         const title =
           args.title !== undefined
@@ -372,20 +368,16 @@ export const RunCommand = cmd({
       }
 
       const sessionID = await (async () => {
-        let id: string | undefined
-        if (args.continue) {
-          const result = await sdk.session.list()
-          id = result.data?.find((s) => !s.parentID)?.id
-        } else if (args.session) {
-          id = args.session
-        }
+        const baseID = args.continue
+          ? (await sdk.session.list()).data?.find((s) => !s.parentID)?.id
+          : args.session
 
-        if (id && args.forkSession) {
-          const forked = await sdk.session.fork({ sessionID: id })
+        if (baseID && args.forkSession) {
+          const forked = await sdk.session.fork({ sessionID: baseID })
           return forked.data?.id
         }
 
-        if (id) return id
+        if (baseID) return baseID
 
         const title =
           args.title !== undefined
