@@ -50,7 +50,8 @@ export const RunCommand = cmd({
         describe: "session id to continue",
         type: "string",
       })
-      .option("fork", {
+      .option("fork-session", {
+        alias: ["fork"],
         describe: "fork the session before continuing (requires --continue or --session)",
         type: "boolean",
       })
@@ -137,8 +138,8 @@ export const RunCommand = cmd({
       process.exit(1)
     }
 
-    if (args.fork && !args.continue && !args.session) {
-      UI.error("--fork requires --continue or --session")
+    if (args.forkSession && !args.continue && !args.session) {
+      UI.error("--fork-session requires --continue or --session")
       process.exit(1)
     }
 
@@ -296,7 +297,7 @@ export const RunCommand = cmd({
           id = args.session
         }
 
-        if (id && args.fork) {
+        if (id && args.forkSession) {
           const forked = await sdk.session.fork({ sessionID: id })
           return forked.data?.id
         }
@@ -380,7 +381,7 @@ export const RunCommand = cmd({
           id = args.session
         }
 
-        if (id && args.fork) {
+        if (id && args.forkSession) {
           const forked = await sdk.session.fork({ sessionID: id })
           return forked.data?.id
         }
