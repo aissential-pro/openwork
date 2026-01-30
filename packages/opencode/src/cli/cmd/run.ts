@@ -50,6 +50,10 @@ export const RunCommand = cmd({
         describe: "session id to continue",
         type: "string",
       })
+      .option("fork", {
+        describe: "fork the session before continuing (requires --continue or --session)",
+        type: "boolean",
+      })
       .option("share", {
         type: "boolean",
         describe: "share the session",
@@ -130,6 +134,11 @@ export const RunCommand = cmd({
 
     if (message.trim().length === 0 && !args.command) {
       UI.error("You must provide a message or a command")
+      process.exit(1)
+    }
+
+    if (args.fork && !args.continue && !args.session) {
+      UI.error("--fork requires --continue or --session")
       process.exit(1)
     }
 
@@ -279,11 +288,20 @@ export const RunCommand = cmd({
       const sdk = createOpencodeClient({ baseUrl: args.attach })
 
       const sessionID = await (async () => {
+        let id: string | undefined
         if (args.continue) {
           const result = await sdk.session.list()
-          return result.data?.find((s) => !s.parentID)?.id
+          id = result.data?.find((s) => !s.parentID)?.id
+        } else if (args.session) {
+          id = args.session
         }
-        if (args.session) return args.session
+
+        if (id && args.fork) {
+          const forked = await sdk.session.fork({ sessionID: id })
+          return forked.data?.id
+        }
+
+        if (id) return id
 
         const title =
           args.title !== undefined
@@ -354,11 +372,20 @@ export const RunCommand = cmd({
       }
 
       const sessionID = await (async () => {
+        let id: string | undefined
         if (args.continue) {
           const result = await sdk.session.list()
-          return result.data?.find((s) => !s.parentID)?.id
+          id = result.data?.find((s) => !s.parentID)?.id
+        } else if (args.session) {
+          id = args.session
         }
-        if (args.session) return args.session
+
+        if (id && args.fork) {
+          const forked = await sdk.session.fork({ sessionID: id })
+          return forked.data?.id
+        }
+
+        if (id) return id
 
         const title =
           args.title !== undefined
