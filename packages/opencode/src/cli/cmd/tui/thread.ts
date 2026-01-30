@@ -66,8 +66,8 @@ export const TuiThreadCommand = cmd({
       })
       .option("fork-session", {
         alias: ["f"],
-        describe: "fork the session before continuing (requires --continue or --session)",
         type: "boolean",
+        describe: "fork the session when continuing (use with --continue or --session)",
       })
       .option("prompt", {
         type: "string",
