@@ -36,7 +36,7 @@ export function Tips() {
   const parts = parse(TIPS[Math.floor(Math.random() * TIPS.length)])
 
   return (
-    <box flexDirection="row" maxWidth="100%">
+    <box flexDirection="column" maxWidth="100%">
       <text flexShrink={0} style={{ fg: theme.warning }}>
         ● Tip{" "}
       </text>

@@ -105,7 +105,7 @@ export function Home() {
             hint={Hint}
           />
         </box>
-        <box width="100%" paddingTop={2}>
+        <box width="100%" paddingTop={2} flexDirection="column">
           <Show when={showTips()}>
             <Tips />
           </Show>
