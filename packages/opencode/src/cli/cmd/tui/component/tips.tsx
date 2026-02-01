@@ -1,5 +1,4 @@
 import { createMemo, createSignal, For } from "solid-js"
-import { useTerminalDimensions } from "@opentui/solid"
 import { DEFAULT_THEMES, useTheme } from "@tui/context/theme"
 import { Locale } from "@/util/locale"
 
@@ -34,11 +33,10 @@ function parse(tip: string): TipPart[] {
 
 export function Tips() {
   const theme = useTheme().theme
-  const dimensions = useTerminalDimensions()
   const parts = parse(TIPS[Math.floor(Math.random() * TIPS.length)])
 
   return (
-    <box flexDirection="column" width="100%" maxWidth={dimensions().width - 4}>
+    <box flexDirection="row" width="100%">
       <text flexShrink={0} style={{ fg: theme.warning }}>
         ● Tip{" "}
       </text>
