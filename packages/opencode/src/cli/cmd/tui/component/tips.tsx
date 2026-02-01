@@ -36,11 +36,11 @@ export function Tips() {
   const parts = parse(TIPS[Math.floor(Math.random() * TIPS.length)])
 
   return (
-    <box flexDirection="column" maxWidth="100%">
+    <box flexDirection="column" width="100%">
       <text flexShrink={0} style={{ fg: theme.warning }}>
         ● Tip{" "}
       </text>
-      <text flexShrink={1} wrapMode="word" width="100%">
+      <text flexGrow={1} wrapMode="word">
         <For each={parts}>
           {(part) => <span style={{ fg: part.highlight ? theme.text : theme.textMuted }}>{part.text}</span>}
         </For>
