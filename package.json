@@ -15,10 +15,11 @@
   },
   "workspaces": {
     "packages": [
-      "packages/*",
-      "packages/console/*",
-      "packages/sdk/js",
-      "packages/slack"
+      "packages/opencode",
+      "packages/sdk",
+      "packages/plugin",
+      "packages/util",
+      "packages/script"
     ],
     "catalog": {
       "@types/bun": "1.3.5",
