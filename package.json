@@ -19,7 +19,8 @@
       "packages/sdk/js",
       "packages/plugin",
       "packages/util",
-      "packages/script"
+      "packages/script",
+      "packages/gateway"
     ],
     "catalog": {
       "@types/bun": "1.3.5",
