@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 
 import { $ } from "bun"
-import { createOpencode } from "@opencode-ai/sdk/v2"
+import { createOpencode } from "@openwork/sdk/v2"
 import { parseArgs } from "util"
 
 export const team = [

@@ -1,12 +1,12 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "opencode",
+  "name": "openwork",
   "description": "AI-powered development tool",
   "private": true,
   "type": "module",
   "packageManager": "bun@1.3.5",
   "scripts": {
-    "dev": "bun run --cwd packages/opencode --conditions=browser src/index.ts",
+    "dev": "bun run --cwd packages/openwork --conditions=browser src/index.ts",
     "typecheck": "bun turbo typecheck",
     "prepare": "husky",
     "random": "echo 'Random script'",
@@ -15,8 +15,8 @@
   },
   "workspaces": {
     "packages": [
-      "packages/opencode",
-      "packages/sdk",
+      "packages/openwork",
+      "packages/sdk/js",
       "packages/plugin",
       "packages/util",
       "packages/script"
@@ -74,9 +74,9 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.933.0",
-    "@opencode-ai/plugin": "workspace:*",
-    "@opencode-ai/script": "workspace:*",
-    "@opencode-ai/sdk": "workspace:*",
+    "@openwork/plugin": "workspace:*",
+    "@openwork/script": "workspace:*",
+    "@openwork/sdk": "workspace:*",
     "typescript": "catalog:"
   },
   "repository": {

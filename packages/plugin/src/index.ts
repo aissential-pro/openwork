@@ -10,7 +10,7 @@ import type {
   Part,
   Auth,
   Config,
-} from "@opencode-ai/sdk"
+} from "@openwork/sdk"
 
 import type { BunShell } from "./shell"
 import { type ToolDefinition } from "./tool"
