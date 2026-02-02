@@ -32,6 +32,33 @@ OpenWork includes specialized agents for business automation:
 - **build** - Full access agent for automation development
 - **plan** - Analysis and planning agent for workflow optimization
 
+### Model Configuration
+
+OpenWork supports multiple AI models. We recommend the following configuration for optimal cost-effectiveness:
+
+**Default Model: Claude Sonnet 4**
+- Best balance of performance and cost for most business tasks
+- Excellent for document creation, analysis, and routine automation
+- Handles complex reasoning while keeping costs manageable
+
+**For Complex Tasks: Claude Opus 4**
+- Use for high-stakes business decisions and complex multi-step analysis
+- Superior reasoning for strategic planning and critical document review
+- Switch to Opus when you need the highest quality output
+
+**Switching Models:**
+You can configure the model in your OpenWork settings or environment variables:
+```bash
+export OPENWORK_MODEL=claude-opus-4-5
+# or
+export OPENWORK_MODEL=claude-sonnet-4-5
+```
+
+**Cost Optimization Tips:**
+- Use Sonnet 4 for routine tasks (80-90% of work)
+- Reserve Opus 4 for strategic decisions and complex analysis
+- Sub-agents spawned by the main agent typically use Sonnet 4 by default
+
 ### About
 
 OpenWork is a fork of [OpenCode](https://github.com/anomalyco/opencode) customized for business automation and workflow optimization. It inherits OpenCode's powerful AI agent capabilities and focuses them on enterprise use cases.
