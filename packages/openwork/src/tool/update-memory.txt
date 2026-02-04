@@ -1,0 +1,13 @@
+Updates the agent memory file (agent.md) to persist information across sessions.
+
+Usage:
+- Use this tool to remember important information that should be available in future conversations
+- The content will be appended to the Memory section of agent.md with a timestamp
+- If agent.md doesn't exist, it will be created automatically
+- Memory is stored in the current working directory or ~/.openwork/agent.md
+- Use this for: user preferences, project-specific context, important decisions, recurring patterns
+
+Examples:
+- "User prefers TypeScript over JavaScript for new files"
+- "This project uses pnpm for package management"
+- "Database migrations are in the migrations/ folder"

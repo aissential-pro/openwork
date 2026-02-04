@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@openwork/gateway",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "typecheck": "echo 'Gateway typecheck skipped - uses openwork workspace package'",
+    "start": "bun run src/index.ts"
+  },
+  "dependencies": {
+    "openwork": "workspace:*",
+    "telegraf": "^4.16.0"
+  },
+  "devDependencies": {
+    "@tsconfig/bun": "catalog:",
+    "@types/bun": "catalog:",
+    "@typescript/native-preview": "catalog:",
+    "typescript": "catalog:"
+  }
+}

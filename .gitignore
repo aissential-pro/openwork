@@ -1,0 +1,50 @@
+.DS_Store
+node_modules
+.worktrees
+.sst
+.env
+.idea
+.vscode
+*~
+playground
+tmp
+dist
+ts-dist
+.turbo
+**/.serena
+.serena/
+/result
+refs
+Session.vim
+opencode.json
+a.out
+target
+.scripts
+.direnv/
+
+# Local dev files
+opencode-dev
+logs/
+*.bun-build
+
+# Secrets & Credentials - NEVER COMMIT
+deploy/.env
+deploy/credentials/
+credentials/
+*.keys.json
+*-credentials.json
+.gdrive-server-credentials.json
+.gmail-credentials.json
+.calendar-credentials.json
+gcp-oauth.keys.json
+*.bak
+
+# MCP Configuration - NEVER COMMIT (use template instead)
+# The template is opencode.jsonc.template (tracked in git)
+# The actual config may contain secrets and should be in Docker volume only
+deploy/opencode.jsonc
+opencode.jsonc
+
+# Windows artifacts
+nul
+packages/discord-gateway.pro-only/
