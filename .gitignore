@@ -26,3 +26,9 @@ target
 opencode-dev
 logs/
 *.bun-build
+
+# Windows reserved device name created by some tools
+nul
+
+# Upstream sync state
+.upstream-ref
